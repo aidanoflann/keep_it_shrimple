@@ -3,8 +3,12 @@ using System.Collections;
 
 public class Board : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    #region private fields
+    private Map _pieceMapping = new Map();
+    #endregion
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
