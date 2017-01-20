@@ -23,6 +23,7 @@ public class DragPiece : MonoBehaviour
 		if (dragging) {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			Vector3 rayPoint = ray.GetPoint (distance);
+            rayPoint.y = 0.15f;  //The Stevie Hack
 			transform.position = rayPoint;
 		}
 	}
