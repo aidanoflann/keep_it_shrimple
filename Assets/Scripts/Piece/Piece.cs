@@ -12,14 +12,17 @@ public class Piece : MonoBehaviour {
     private GameManager _gameManager; // super bad practice lol
     #endregion
 
-    [SerializeField]
     public PieceColour colour;
 
-    public void Place(Vector3 position)
+    public void Place(Vector3 position, bool triggerTurnChange=true)
     // place the piece - snapping to nearest board position.
     {
         this.position = _board.GetNearestPosition(this);
         this.transform.position = _board.GetCoordinate(this.position);
+        if (triggerTurnChange)
+        {
+            this._gameManager.TurnChange();
+        }
     }
 
     #region MonoBehaviour utilities
@@ -28,7 +31,7 @@ public class Piece : MonoBehaviour {
         this._board = FindObjectOfType<Board>();
         this._gameManager = FindObjectOfType<GameManager>();
         this.y = transform.position.y;
-        this.Place(this.transform.position);
+        this.Place(this.transform.position, false);
 	}
 
     void OnMouseDown()

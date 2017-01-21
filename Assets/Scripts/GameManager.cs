@@ -9,7 +9,6 @@ public enum PieceColour
 
 public class GameManager : MonoBehaviour
 {
-
     public PieceColour turn;
 
     // Use this for initialization
@@ -22,5 +21,17 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void TurnChange()
+    {
+        if (this.turn == PieceColour.BLACK)
+        {
+            this.turn = PieceColour.WHITE;
+        }
+        else if (this.turn == PieceColour.WHITE)
+        {
+            this.turn = PieceColour.BLACK;
+        }
     }
 }
