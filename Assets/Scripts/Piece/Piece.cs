@@ -50,10 +50,14 @@ public class Piece : MonoBehaviour
             this.transform.position = _board.GetCoordinate(candidatePosition);
             this.position = candidatePosition;
             //check if there is an existing piece and destroy it if there is
-            foreach (Piece candidate in deathList)
+            for (int i = 0; i < deathList.Count; i++)
             {
+                Piece candidate = deathList[i];
                 if (candidate.position[0] == this.position[0] && candidate.position[1] == this.position[1])
+                {
                     Object.Destroy(candidate.gameObject);
+                    candidate = null;
+                }
             }
             isFirstMove = false;
 
