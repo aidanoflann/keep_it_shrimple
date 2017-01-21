@@ -12,6 +12,9 @@ public class Piece : MonoBehaviour {
     private GameManager _gameManager; // super bad practice lol
     #endregion
 
+    [SerializeField]
+    public PieceColour colour;
+
     public void Place(Vector3 position)
     // place the piece - snapping to nearest board position.
     {
