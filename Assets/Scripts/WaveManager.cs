@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveManager {
 
     int _turnCounter = -1;
     int _turnOfNextWave;
 
+    private IWaveBehaviour currentBehaviour;
+    private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
+
     public WaveManager()
     {
-        this.CalculateTurnOfNextWave();
+        this.allBehaviours.Add(new RightWave());
+        this.CalculateTurnOfNextWaveAndBehaviour();
     }
 
 	public void ApplyWaveToBoard(Board board)
@@ -16,15 +21,16 @@ public class WaveManager {
         this._turnCounter++;
         if (this._turnCounter >= this._turnOfNextWave)
         {
-            // Do tha wave!
+            this.currentBehaviour.DoWave(board);
             this._turnCounter = -1;
-            this.CalculateTurnOfNextWave();
+            this.CalculateTurnOfNextWaveAndBehaviour();
         }
     }
 
-    private void CalculateTurnOfNextWave()
+    private void CalculateTurnOfNextWaveAndBehaviour()
     {
-        this._turnOfNextWave = Random.Range(1, 4);
+        this._turnOfNextWave = Random.Range(1, 5);
+        this.currentBehaviour = this.allBehaviours[Random.Range(0, this.allBehaviours.Count)];
     }
 }
 
@@ -37,6 +43,25 @@ class RightWave : IWaveBehaviour
 {
     public void DoWave(Board board)
     {
-        return;
+        // iterate through all positions on the board, and set its value to the value to the left
+        // note: iterating right to left
+        for(int x = board._pieceMapping.numXSquares -1; x != 0; x--)
+        {
+            if (x > 0)
+            {
+                for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+                {
+                    board._pieces[x, z] = board._pieces[x - 1, z];
+                }
+            }
+            else
+            {
+                for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+                {
+                    board._pieces[x, z] = null;
+                }
+            }
+        }
+
     }
 }
