@@ -14,6 +14,8 @@ public class WaveManager {
 
     int _turnCounter = -1;
     int _turnOfNextWave;
+    private WaveIndicator _waveIndicator;
+    private WaveDirection _waveDirection = WaveDirection.LEFT;
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
@@ -23,9 +25,10 @@ public class WaveManager {
 
     public WaveManager()
     {
-        this.allBehaviours.Add(new RightWave());
+        this.allBehaviours.Add(new LeftWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
+        this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
         this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
         this.waveHasHappened = false;
     }
@@ -60,6 +63,10 @@ public class WaveManager {
         {
             // note this property has a side effect lol jams
             this._turnCounter++;
+            if (this._turnCounter + 1 == this._turnOfNextWave)
+            {
+                this._waveIndicator.Indicate(this._waveDirection);
+            }
             return this._turnCounter >= this._turnOfNextWave;
         }
     }
@@ -67,6 +74,7 @@ public class WaveManager {
 	public void ApplyWaveToBoard(Board board)
     {
         this.currentBehaviour.DoWave(board);
+        this._waveIndicator.Hide();
         this._turnCounter = -1;
         this.CalculateTurnOfNextWaveAndBehaviour();
     }
@@ -83,7 +91,7 @@ public interface IWaveBehaviour
     void DoWave(Board board);
 }
 
-class RightWave : IWaveBehaviour
+class LeftWave : IWaveBehaviour
 {
     public void DoWave(Board board)
     {
