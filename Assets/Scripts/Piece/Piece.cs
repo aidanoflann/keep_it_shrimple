@@ -20,6 +20,7 @@ public class Piece : MonoBehaviour {
     public void Place(Vector3 position, bool triggerTurnChange = true)
     // place the piece - snapping to nearest board position.
     {
+        this.transform.position = position;
         bool validMove = false;
         int[] candidatePosition = _board.GetNearestPosition(this);
         foreach (int[] test in currentLegalPositions) {
@@ -46,6 +47,7 @@ public class Piece : MonoBehaviour {
     public void StartPlace(Vector3 position, bool triggerTurnChange = true)
     // place the piece - snapping to nearest board position.
     {
+        this.transform.position = position;
         this.position = _board.GetNearestPosition(this);
         this.transform.position = _board.GetCoordinate(this.position);
         if (triggerTurnChange)
