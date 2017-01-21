@@ -2,7 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Piece : MonoBehaviour {
+public enum PieceType
+{
+    PAWN = 0,
+    KING = 1
+}
+
+public class Piece : MonoBehaviour
+{
 
     #region private fields
     public int[] position = new int[2];
@@ -11,10 +18,11 @@ public class Piece : MonoBehaviour {
     private float distance;
     private float y;
     private GameManager _gameManager; // super bad practice lol
+    private List<int[]> currentLegalPositions;
     private PieceBehaviour myBehaviour;
-    List<int[]> currentLegalPositions;
     #endregion
 
+    public PieceType myType;
     public PieceColour colour;
     private List<Piece> deathList;
 
@@ -24,8 +32,10 @@ public class Piece : MonoBehaviour {
         this.transform.position = position;
         bool validMove = false;
         int[] candidatePosition = _board.GetNearestPosition(this);
-        foreach (int[] test in currentLegalPositions) {
-            if (candidatePosition[0] == test[0] && candidatePosition[1] == test[1]) {
+        foreach (int[] test in currentLegalPositions)
+        {
+            if (candidatePosition[0] == test[0] && candidatePosition[1] == test[1])
+            {
                 validMove = true;
                 break;
             }
@@ -35,9 +45,9 @@ public class Piece : MonoBehaviour {
             this.transform.position = _board.GetCoordinate(candidatePosition);
             this.position = candidatePosition;
             //check if there is an existing piece and destroy it if there is
-            foreach(Piece candidate in deathList)
+            foreach (Piece candidate in deathList)
             {
-                if(candidate.position[0]==this.position[0] && candidate.position[1] == this.position[1])
+                if (candidate.position[0] == this.position[0] && candidate.position[1] == this.position[1])
                     Object.Destroy(candidate.gameObject);
             }
 
@@ -67,11 +77,11 @@ public class Piece : MonoBehaviour {
 
     #region MonoBehaviour utilities
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         this._board = FindObjectOfType<Board>();
         this._gameManager = FindObjectOfType<GameManager>();
         this.y = transform.position.y;
-        this.myBehaviour = new RookBehaviour();
         this.StartPlace(this.transform.position, false);
         Renderer rend = GetComponent<Renderer>();
         rend.material.shader = Shader.Find("Specular");
@@ -86,6 +96,19 @@ public class Piece : MonoBehaviour {
         }
         shaderColor.a = 0.9f;
         rend.material.SetColor("_Color", shaderColor);
+
+        switch (myType)
+        {
+            case PieceType.KING:
+                myBehaviour = new KingBehaviour();
+                break;
+            case PieceType.PAWN:
+                myBehaviour = new RookBehaviour();
+                break;
+            default:
+                myBehaviour = new KingBehaviour();
+                break;
+        }
     }
 
     void OnMouseDown()
@@ -123,7 +146,8 @@ public class Piece : MonoBehaviour {
         }
     }
 
-    public int[] startPosition() {
+    public int[] startPosition()
+    {
         return position;
     }
 
