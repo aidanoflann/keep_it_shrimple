@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private WaveManager _waveManager;
     private Board _board;
 
+    public bool wavesEnabled;
+
     // Use this for initialization
     void Start()
     {
@@ -41,6 +43,9 @@ public class GameManager : MonoBehaviour
             Camera.main.backgroundColor = Color.black;
         }
         // wavemanager will check if the board needs to be waved, and if so, waves it.
-        this._waveManager.ApplyWaveToBoard(this._board);
+        if (this.wavesEnabled)
+        {
+            this._waveManager.ApplyWaveToBoard(this._board);
+        }
     }
 }
