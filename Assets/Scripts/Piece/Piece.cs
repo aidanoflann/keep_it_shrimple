@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public enum PieceType
 {
-    PAWN = 0,
-    KING = 1
+    ROOK = 0,
+    KING = 1,
+    PRAWN = 2
 }
 
 public class Piece : MonoBehaviour
@@ -25,6 +26,7 @@ public class Piece : MonoBehaviour
     public PieceType myType;
     public PieceColour colour;
     private List<Piece> deathList;
+    public bool isFirstMove = true;
 
     public void Place(Vector3 position, bool triggerTurnChange = true)
     // place the piece - snapping to nearest board position.
@@ -50,7 +52,7 @@ public class Piece : MonoBehaviour
                 if (candidate.position[0] == this.position[0] && candidate.position[1] == this.position[1])
                     Object.Destroy(candidate.gameObject);
             }
-
+            isFirstMove = false;
 
             if (triggerTurnChange)
             {
@@ -102,8 +104,11 @@ public class Piece : MonoBehaviour
             case PieceType.KING:
                 myBehaviour = new KingBehaviour();
                 break;
-            case PieceType.PAWN:
+            case PieceType.ROOK:
                 myBehaviour = new RookBehaviour();
+                break;
+            case PieceType.PRAWN:
+                myBehaviour = new PrawnBehaviour();
                 break;
             default:
                 myBehaviour = new KingBehaviour();
