@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.turn = PieceColour.WHITE;
+        this.turn = PieceColour.BLACK;
+        this.TurnChange();
     }
 
     // Update is called once per frame
@@ -28,10 +29,12 @@ public class GameManager : MonoBehaviour
         if (this.turn == PieceColour.BLACK)
         {
             this.turn = PieceColour.WHITE;
+            Camera.main.backgroundColor = Color.white;
         }
         else if (this.turn == PieceColour.WHITE)
         {
             this.turn = PieceColour.BLACK;
+            Camera.main.backgroundColor = Color.black;
         }
     }
 }
