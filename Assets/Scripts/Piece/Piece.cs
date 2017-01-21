@@ -9,6 +9,7 @@ public class Piece : MonoBehaviour {
     private bool dragging = false;
     private float distance;
     private float y;
+    private GameManager _gameManager; // super bad practice lol
     #endregion
 
     public void Place(Vector3 position)
@@ -22,6 +23,7 @@ public class Piece : MonoBehaviour {
     // Use this for initialization
     void Start () {
         this._board = FindObjectOfType<Board>();
+        this._gameManager = FindObjectOfType<GameManager>();
         this.y = transform.position.y;
         this.Place(this.transform.position);
 	}
