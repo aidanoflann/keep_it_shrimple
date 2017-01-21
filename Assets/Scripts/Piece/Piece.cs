@@ -16,6 +16,7 @@ public class Piece : MonoBehaviour {
     #endregion
 
     public PieceColour colour;
+    private List<Piece> deathList;
 
     public void Place(Vector3 position, bool triggerTurnChange = true)
     // place the piece - snapping to nearest board position.
@@ -33,6 +34,14 @@ public class Piece : MonoBehaviour {
         {
             this.transform.position = _board.GetCoordinate(candidatePosition);
             this.position = candidatePosition;
+            //check if there is an existing piece and destroy it if there is
+            foreach(Piece candidate in deathList)
+            {
+                if(candidate.position[0]==this.position[0] && candidate.position[1] == this.position[1])
+                    Object.Destroy(candidate.gameObject);
+            }
+
+
             if (triggerTurnChange)
             {
                 this._gameManager.TurnChange();
@@ -83,7 +92,7 @@ public class Piece : MonoBehaviour {
     {
         if (this.colour == this._gameManager.turn)
         {
-            currentLegalPositions = myBehaviour.legalPositions(_board, this);
+            currentLegalPositions = myBehaviour.legalPositions(_board, this, out this.deathList);
             if (currentLegalPositions.Count != 0)
             {
                 distance = Vector3.Distance(transform.position, Camera.main.transform.position);
