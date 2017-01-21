@@ -26,7 +26,7 @@ public class WaveManager {
 
     public WaveManager()
     {
-        this.allBehaviours.Add(new LeftWave());
+        this.allBehaviours.Add(new DownWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
@@ -153,6 +153,41 @@ class LeftWave : IWaveBehaviour
                     else
                     {
                         int[] position = new int[2] { x - 1, z };
+                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                        currentPiece.StartPlace(newPosition, false);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+class DownWave : IWaveBehaviour
+{
+    public WaveDirection GetDirection()
+    {
+        return WaveDirection.DOWN;
+    }
+
+    public void DoWave(Board board)
+    {
+        // iterate through all positions on the board, and set its value to the value to the left
+        // note: iterating top to bottom
+        for (int x = 0; x < board._pieceMapping.numXSquares; x++)
+        {
+            for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+            {
+                Piece currentPiece = board._pieces[x, z];
+                if (currentPiece != null)
+                {
+                    if (z == 0)
+                    {
+                        Object.Destroy(currentPiece.gameObject);
+                    }
+                    else
+                    {
+                        int[] position = new int[2] { x , z - 1 };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
                         currentPiece.StartPlace(newPosition, false);
                     }
