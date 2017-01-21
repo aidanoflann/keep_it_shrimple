@@ -8,6 +8,7 @@ public class Piece : MonoBehaviour {
     private Board _board;
     private bool dragging = false;
     private float distance;
+    private float y;
     #endregion
 
     public void Place(Vector3 position)
@@ -21,6 +22,7 @@ public class Piece : MonoBehaviour {
     // Use this for initialization
     void Start () {
         this._board = FindObjectOfType<Board>();
+        this.y = transform.position.y;
         this.Place(this.transform.position);
 	}
 
@@ -44,7 +46,7 @@ public class Piece : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 rayPoint = ray.GetPoint(distance);
-            rayPoint.y = 0.15f;  //The Stevie Hack
+            rayPoint.y = this.y;  //The Stevie Hack
             transform.position = rayPoint;
         }
     }
