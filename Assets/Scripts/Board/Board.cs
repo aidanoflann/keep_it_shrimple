@@ -5,6 +5,7 @@ public class Board : MonoBehaviour {
 
     #region private fields
     private Map _pieceMapping;
+    private Piece[,] _pieces;
     #endregion
 
     public Vector3 GetNearestPosition( Vector3 coordinates)
@@ -20,6 +21,7 @@ public class Board : MonoBehaviour {
         Vector3 size = mf.mesh.bounds.size;
         float yRotation = this.gameObject.transform.rotation.y;
         this._pieceMapping = new Map(min, size, yRotation);
+        this._pieces = new Piece[this._pieceMapping.numXSquares, this._pieceMapping.numZSquares];
     }
 	
 	// Update is called once per frame
