@@ -8,7 +8,8 @@ public enum PieceType
     KING = 1,
     PRAWN = 2,
     KNIGHT = 3,
-    BISHOP = 4
+    BISHOP = 4,
+    QUEEN = 5
 }
 
 public class Piece : MonoBehaviour
@@ -117,6 +118,9 @@ public class Piece : MonoBehaviour
                 break;
             case PieceType.BISHOP:
                 myBehaviour = new BishopBehaviour();
+                break;
+            case PieceType.QUEEN:
+                myBehaviour = new QueenBehabviour();
                 break;
             default:
                 myBehaviour = new KingBehaviour();
