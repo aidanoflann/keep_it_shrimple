@@ -9,33 +9,60 @@ public class Piece : MonoBehaviour {
     private bool dragging = false;
     private float distance;
     private float y;
+    private GameManager _gameManager; // super bad practice lol
     #endregion
 
-    public void Place(Vector3 position)
+    public PieceColour colour;
+
+    public void Place(Vector3 position, bool triggerTurnChange=true)
     // place the piece - snapping to nearest board position.
     {
         this.position = _board.GetNearestPosition(this);
         this.transform.position = _board.GetCoordinate(this.position);
+        if (triggerTurnChange)
+        {
+            this._gameManager.TurnChange();
+        }
     }
 
     #region MonoBehaviour utilities
     // Use this for initialization
     void Start () {
         this._board = FindObjectOfType<Board>();
+        this._gameManager = FindObjectOfType<GameManager>();
         this.y = transform.position.y;
-        this.Place(this.transform.position);
-	}
+        this.Place(this.transform.position, false);
+        Renderer rend = GetComponent<Renderer>();
+        rend.material.shader = Shader.Find("Specular");
+        Color shaderColor;
+        if (this.colour == PieceColour.BLACK)
+        {
+            shaderColor = Color.black;
+        }
+        else
+        {
+            shaderColor = Color.white;
+        }
+        shaderColor.a = 0.9f;
+        rend.material.SetColor("_Color", shaderColor);
+    }
 
     void OnMouseDown()
     {
-        distance = Vector3.Distance(transform.position, Camera.main.transform.position);
-        dragging = true;
+        if (this.colour == this._gameManager.turn)
+        {
+            distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+            dragging = true;
+        }
     }
 
     void OnMouseUp()
     {
-        dragging = false;
-        this.Place(transform.position);
+        if (dragging == true)
+        {
+            dragging = false;
+            this.Place(transform.position);
+        }
     }
 
 
