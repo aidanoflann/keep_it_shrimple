@@ -29,7 +29,7 @@ public class WaveManager {
 
     private void CalculateTurnOfNextWaveAndBehaviour()
     {
-        this._turnOfNextWave = Random.Range(1, 5);
+        this._turnOfNextWave = Random.Range(1, 3);
         this.currentBehaviour = this.allBehaviours[Random.Range(0, this.allBehaviours.Count)];
     }
 }
@@ -45,23 +45,25 @@ class RightWave : IWaveBehaviour
     {
         // iterate through all positions on the board, and set its value to the value to the left
         // note: iterating right to left
-        for(int x = board._pieceMapping.numXSquares -1; x != 0; x--)
+        for(int x = board._pieceMapping.numXSquares -1; x > -1; x--)
         {
-            if (x > 0)
+            for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+                Piece currentPiece = board._pieces[x, z];
+                if (currentPiece != null)
                 {
-                    board._pieces[x, z] = board._pieces[x - 1, z];
-                }
-            }
-            else
-            {
-                for (int z = 0; z < board._pieceMapping.numZSquares; z++)
-                {
-                    board._pieces[x, z] = null;
+                    if (x == board._pieceMapping.numXSquares - 1)
+                    {
+                        Object.Destroy(currentPiece.gameObject);
+                    }
+                    else
+                    {
+                        int[] position = new int[2] { x + 1, z };
+                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                        currentPiece.Place(newPosition, false);
+                    }
                 }
             }
         }
-
     }
 }
