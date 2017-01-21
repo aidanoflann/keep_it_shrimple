@@ -60,7 +60,7 @@ class RightWave : IWaveBehaviour
                     {
                         int[] position = new int[2] { x + 1, z };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.Place(newPosition, false);
+                        currentPiece.StartPlace(newPosition, false);
                     }
                 }
             }
