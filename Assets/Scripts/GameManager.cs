@@ -12,8 +12,10 @@ public class GameManager : MonoBehaviour
     public PieceColour turn;
     private WaveManager _waveManager;
     private Board _board;
+    private Animator _cameraAnimator;
 
     public bool wavesEnabled;
+    public bool cameraRotateEnabled;
 
     // Use this for initialization
     void Start()
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour
         this.turn = PieceColour.BLACK;
         this._waveManager = new WaveManager();
         this._board = FindObjectOfType<Board>();
+        this._cameraAnimator = GameObject.Find("MainCamera").GetComponent<Animator>();
         this.TurnChange();
     }
 
@@ -46,6 +49,10 @@ public class GameManager : MonoBehaviour
         if (this.wavesEnabled && this._waveManager.IsAWaveDue)
         {
             this._waveManager.TriggerWave();
+        }
+        if (cameraRotateEnabled)
+        {
+            _cameraAnimator.SetTrigger("RotateCamera");
         }
     }
 }
