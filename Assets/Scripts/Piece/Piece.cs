@@ -13,7 +13,8 @@ public class Piece : MonoBehaviour {
     public void Place(Vector3 position)
     // place the piece - snapping to nearest board position.
     {
-        transform.position = _board.GetNearestPosition(transform.position);
+        this._position = _board.GetNearestPosition(this);
+        this.transform.position = _board.GetCoordinate(this._position);
     }
 
     #region MonoBehaviour utilities

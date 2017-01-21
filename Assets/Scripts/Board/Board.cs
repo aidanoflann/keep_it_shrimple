@@ -8,10 +8,23 @@ public class Board : MonoBehaviour {
     private Piece[,] _pieces;
     #endregion
 
-    public Vector3 GetNearestPosition( Vector3 coordinates)
+    public int[] GetNearestPosition( Piece piece )
     // Given a position in game coordinates, calculate the nearest coordinates on the Board.
     {
-        return this._pieceMapping.GetNearestPosition(coordinates);
+        Vector3 coordinates = piece.transform.position;
+        int[] newPosition = this._pieceMapping.GetNearestPosition(coordinates);
+        this.PlacePiece(piece, newPosition);
+        return newPosition;
+    }
+
+    public Vector2 GetCoordinate(int[] position)
+    {
+        return this._pieceMapping.GetCoordinate(position);
+    }
+
+    private void PlacePiece( Piece piece, int[] newPosition )
+    {
+        // TODO delete pieces from current position and add to new position
     }
 
     // Use this for initialization
