@@ -4,7 +4,7 @@ using System.Collections;
 public class Piece : MonoBehaviour {
 
     #region private fields
-    private int[] _position = new int[2];
+    public int[] position = new int[2];
     private Board _board;
     private bool dragging = false;
     private float distance;
@@ -13,8 +13,8 @@ public class Piece : MonoBehaviour {
     public void Place(Vector3 position)
     // place the piece - snapping to nearest board position.
     {
-        this._position = _board.GetNearestPosition(this);
-        this.transform.position = _board.GetCoordinate(this._position);
+        this.position = _board.GetNearestPosition(this);
+        this.transform.position = _board.GetCoordinate(this.position);
     }
 
     #region MonoBehaviour utilities

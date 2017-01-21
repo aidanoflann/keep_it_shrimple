@@ -24,7 +24,8 @@ public class Board : MonoBehaviour {
 
     private void MovePiece( Piece piece, int[] newPosition )
     {
-        // TODO delete pieces from current position and add to new position
+        this._pieces[piece.position[0], piece.position[1]] = null;
+        this._pieces[newPosition[0], newPosition[1]] = piece;
     }
 
     // Use this for initialization
