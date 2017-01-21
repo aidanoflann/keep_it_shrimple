@@ -15,7 +15,7 @@ public class WaveManager {
     int _turnCounter = -1;
     int _turnOfNextWave;
     private WaveIndicator _waveIndicator;
-    private WaveDirection _waveDirection = WaveDirection.LEFT;
+    private WaveDirection _waveDirection = WaveDirection.RIGHT;
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
@@ -25,7 +25,7 @@ public class WaveManager {
 
     public WaveManager()
     {
-        this.allBehaviours.Add(new LeftWave());
+        this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
@@ -91,7 +91,7 @@ public interface IWaveBehaviour
     void DoWave(Board board);
 }
 
-class LeftWave : IWaveBehaviour
+class RightWave : IWaveBehaviour
 {
     public void DoWave(Board board)
     {
@@ -105,6 +105,35 @@ class LeftWave : IWaveBehaviour
                 if (currentPiece != null)
                 {
                     if (x == board._pieceMapping.numXSquares - 1)
+                    {
+                        Object.Destroy(currentPiece.gameObject);
+                    }
+                    else
+                    {
+                        int[] position = new int[2] { x + 1, z };
+                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                        currentPiece.StartPlace(newPosition, false);
+                    }
+                }
+            }
+        }
+    }
+}
+
+class LeftWave : IWaveBehaviour
+{
+    public void DoWave(Board board)
+    {
+        // iterate through all positions on the board, and set its value to the value to the left
+        // note: iterating right to left
+        for (int x = 0; x < board._pieceMapping.numXSquares; x--)
+        {
+            for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+            {
+                Piece currentPiece = board._pieces[x, z];
+                if (currentPiece != null)
+                {
+                    if (x == 0)
                     {
                         Object.Destroy(currentPiece.gameObject);
                     }
