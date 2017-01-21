@@ -16,15 +16,21 @@ public class WaveManager {
         this.CalculateTurnOfNextWaveAndBehaviour();
     }
 
+    public bool IsAWaveDue
+    {
+        get
+        {
+            // note this property has a side effect lol jams
+            this._turnCounter++;
+            return this._turnCounter >= this._turnOfNextWave;
+        }
+    }
+
 	public void ApplyWaveToBoard(Board board)
     {
-        this._turnCounter++;
-        if (this._turnCounter >= this._turnOfNextWave)
-        {
-            this.currentBehaviour.DoWave(board);
-            this._turnCounter = -1;
-            this.CalculateTurnOfNextWaveAndBehaviour();
-        }
+        this.currentBehaviour.DoWave(board);
+        this._turnCounter = -1;
+        this.CalculateTurnOfNextWaveAndBehaviour();
     }
 
     private void CalculateTurnOfNextWaveAndBehaviour()
