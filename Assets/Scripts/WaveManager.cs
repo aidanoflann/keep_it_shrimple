@@ -9,11 +9,29 @@ public class WaveManager {
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
+    private Animator _waveAnimator;
 
     public WaveManager()
     {
         this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
+        this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
+    }
+
+    public void Tick(Board board)
+    {
+
+        if (!this._waveAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            this.ApplyWaveToBoard(board);
+            _waveAnimator.SetTrigger("StartWave");
+
+        }
+    }
+
+    public void TriggerWave()
+    {
+        _waveAnimator.SetTrigger("StartWave");
     }
 
     public bool IsAWaveDue

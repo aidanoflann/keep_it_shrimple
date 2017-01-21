@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public PieceColour turn;
     private WaveManager _waveManager;
     private Board _board;
-    private Animator _waveAnimator;
 
     public bool wavesEnabled;
 
@@ -22,14 +21,13 @@ public class GameManager : MonoBehaviour
         this.turn = PieceColour.BLACK;
         this._waveManager = new WaveManager();
         this._board = FindObjectOfType<Board>();
-        this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this.TurnChange();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        this._waveManager.Tick(this._board);
     }
 
     public void TurnChange()
@@ -47,8 +45,7 @@ public class GameManager : MonoBehaviour
         // wavemanager will check if the board needs to be waved, and if so, waves it.
         if (this.wavesEnabled && this._waveManager.IsAWaveDue)
         {
-            //_waveAnimator.Play("StartWave");
-            this._waveManager.ApplyWaveToBoard(this._board);
+            this._waveManager.TriggerWave();
         }
     }
 }
