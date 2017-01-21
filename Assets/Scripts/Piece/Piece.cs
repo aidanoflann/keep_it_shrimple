@@ -21,6 +21,7 @@ public class Piece : MonoBehaviour {
     // Use this for initialization
     void Start () {
         this._board = FindObjectOfType<Board>();
+        this.Place(this.transform.position);
 	}
 
     void OnMouseDown()

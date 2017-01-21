@@ -28,14 +28,18 @@ public class Board : MonoBehaviour {
         this._pieces[newPosition[0], newPosition[1]] = piece;
     }
 
-    // Use this for initialization
-    void Start() {
+    void Awake()
+    {
         MeshFilter mf = this.gameObject.GetComponent<MeshFilter>();
         Vector3 min = mf.mesh.bounds.min;
         Vector3 size = mf.mesh.bounds.size;
         float yRotation = this.gameObject.transform.rotation.y;
         this._pieceMapping = new Map(min, size, yRotation);
         this._pieces = new Piece[this._pieceMapping.numXSquares, this._pieceMapping.numZSquares];
+    }
+
+    // Use this for initialization
+    void Start() {
     }
 	
 	// Update is called once per frame
