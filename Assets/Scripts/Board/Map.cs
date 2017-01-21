@@ -16,6 +16,24 @@ public class Map
         this.CalculateCoordinates(min, size, yRotation);
     }
 
+    public int[] GetNearestPosition(Vector3 point)
+    {
+        float closestDistance = 10000f;
+        int[] position = new int[2];
+        for (int x = 0; x < this._numXSquares; x++)
+        {
+            for (int z = 0; z < this._numZSquares; z++)
+            {
+                if (Vector3.Distance(point, this._coordinates[x, z]) < closestDistance)
+                {
+                    position[0] = x;
+                    position[1] = z;
+                }
+            }
+        }
+        return position;
+    }
+
     public void CalculateCoordinates(Vector3 min, Vector3 size, float yRotation)
     // min: extreme corner of mesh
     // size: full size of mesh (only care about x and z)
