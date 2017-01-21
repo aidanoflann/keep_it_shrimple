@@ -4,8 +4,10 @@ using System.Collections;
 public class Board : MonoBehaviour {
 
     #region private fields
-    private Map _pieceMapping;
-    private Piece[,] _pieces;
+    //List of the positions a piece can be placed on
+    public Map _pieceMapping;
+    //vector of positions on the map. If element != null piece is in this location
+    public Piece[,] _pieces;
     #endregion
 
     public int[] GetNearestPosition( Piece piece )
@@ -46,4 +48,5 @@ public class Board : MonoBehaviour {
 	void Update () {
 	
 	}
+
 }
