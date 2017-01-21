@@ -36,7 +36,7 @@ public class Map
         return this._coordinates[position[0], position[1]];
     }
 
-    public void CalculateCoordinates(Vector3 min, Vector3 size, float yRotation)
+    private void CalculateCoordinates(Vector3 min, Vector3 size, float yRotation)
     // min: extreme corner of mesh
     // size: full size of mesh (only care about x and z)
     // yRotation: angle in degrees about which map has been rotated.
