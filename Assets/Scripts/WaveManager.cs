@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public enum WaveDirection
 {
+    NONE = 0,
     UP = 1,
     DOWN = 2,
     RIGHT = 3,
@@ -15,7 +16,7 @@ public class WaveManager {
     int _turnCounter = -1;
     int _turnOfNextWave;
     private WaveIndicator _waveIndicator;
-    private WaveDirection _waveDirection = WaveDirection.LEFT;
+    private WaveDirection _waveDirection;
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
@@ -25,7 +26,10 @@ public class WaveManager {
 
     public WaveManager()
     {
+        this.allBehaviours.Add(new UpWave());
+        this.allBehaviours.Add(new DownWave());
         this.allBehaviours.Add(new LeftWave());
+        this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
@@ -81,18 +85,25 @@ public class WaveManager {
 
     private void CalculateTurnOfNextWaveAndBehaviour()
     {
-        this._turnOfNextWave = Random.Range(1, 3);
+        this._turnOfNextWave = Random.Range(3, 4);
         this.currentBehaviour = this.allBehaviours[Random.Range(0, this.allBehaviours.Count)];
+        this._waveDirection = this.currentBehaviour.GetDirection();
     }
 }
 
 public interface IWaveBehaviour
 {
     void DoWave(Board board);
+    WaveDirection GetDirection();
 }
 
-class LeftWave : IWaveBehaviour
+class RightWave : IWaveBehaviour
 {
+    public WaveDirection GetDirection()
+    {
+        return WaveDirection.RIGHT;
+    }
+
     public void DoWave(Board board)
     {
         // iterate through all positions on the board, and set its value to the value to the left
@@ -111,6 +122,109 @@ class LeftWave : IWaveBehaviour
                     else
                     {
                         int[] position = new int[2] { x + 1, z };
+                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                        currentPiece.StartPlace(newPosition, false);
+                    }
+                }
+            }
+        }
+    }
+}
+
+class LeftWave : IWaveBehaviour
+{
+    public WaveDirection GetDirection()
+    {
+        return WaveDirection.LEFT;
+    }
+
+    public void DoWave(Board board)
+    {
+        // iterate through all positions on the board, and set its value to the value to the left
+        // note: iterating left to right
+        for (int x = 0; x < board._pieceMapping.numXSquares; x++)
+        {
+            for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+            {
+                Piece currentPiece = board._pieces[x, z];
+                if (currentPiece != null)
+                {
+                    if (x == 0)
+                    {
+                        Object.Destroy(currentPiece.gameObject);
+                    }
+                    else
+                    {
+                        int[] position = new int[2] { x - 1, z };
+                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                        currentPiece.StartPlace(newPosition, false);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+class DownWave : IWaveBehaviour
+{
+    public WaveDirection GetDirection()
+    {
+        return WaveDirection.DOWN;
+    }
+
+    public void DoWave(Board board)
+    {
+        // iterate through all positions on the board, and set its value to the value to the left
+        // note: iterating top to bottom
+        for (int x = 0; x < board._pieceMapping.numXSquares; x++)
+        {
+            for (int z = 0; z < board._pieceMapping.numZSquares; z++)
+            {
+                Piece currentPiece = board._pieces[x, z];
+                if (currentPiece != null)
+                {
+                    if (z == 0)
+                    {
+                        Object.Destroy(currentPiece.gameObject);
+                    }
+                    else
+                    {
+                        int[] position = new int[2] { x , z - 1 };
+                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                        currentPiece.StartPlace(newPosition, false);
+                    }
+                }
+            }
+        }
+    }
+}
+
+class UpWave : IWaveBehaviour
+{
+    public WaveDirection GetDirection()
+    {
+        return WaveDirection.UP;
+    }
+
+    public void DoWave(Board board)
+    {
+        // iterate through all positions on the board, and set its value to the value to the left
+        // note: iterating top to bottom
+        for (int x = 0; x < board._pieceMapping.numXSquares; x++)
+        {
+            for (int z = board._pieceMapping.numZSquares - 1; z > -1; z--)
+            {
+                Piece currentPiece = board._pieces[x, z];
+                if (currentPiece != null)
+                {
+                    if (z == 0)
+                    {
+                        Object.Destroy(currentPiece.gameObject);
+                    }
+                    else
+                    {
+                        int[] position = new int[2] { x, z + 1 };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
                         currentPiece.StartPlace(newPosition, false);
                     }
