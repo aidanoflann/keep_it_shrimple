@@ -8,7 +8,7 @@ public class Board : MonoBehaviour {
     #endregion
 
     public Vector3 GetNearestPosition( Vector3 coordinates)
-    // Given a position in game coordinates, calculate the nearest chessboard position (e.g. [3, 1]).
+    // Given a position in game coordinates, calculate the nearest coordinates on the Board.
     {
         return this._pieceMapping.GetNearestPosition(coordinates);
     }
