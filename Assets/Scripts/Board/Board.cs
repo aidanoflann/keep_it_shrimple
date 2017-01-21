@@ -18,7 +18,8 @@ public class Board : MonoBehaviour {
         MeshFilter mf = this.gameObject.GetComponent<MeshFilter>();
         Vector3 min = mf.mesh.bounds.min;
         Vector3 size = mf.mesh.bounds.size;
-        this._pieceMapping = new Map(min, size);
+        float yRotation = this.gameObject.transform.rotation.y;
+        this._pieceMapping = new Map(min, size, yRotation);
     }
 	
 	// Update is called once per frame
