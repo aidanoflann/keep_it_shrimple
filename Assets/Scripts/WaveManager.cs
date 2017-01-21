@@ -27,3 +27,16 @@ public class WaveManager {
         this._turnOfNextWave = Random.Range(1, 4);
     }
 }
+
+public interface IWaveBehaviour
+{
+    void DoWave(Board board);
+}
+
+class RightWave : IWaveBehaviour
+{
+    public void DoWave(Board board)
+    {
+        return;
+    }
+}
