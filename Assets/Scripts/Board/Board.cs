@@ -13,16 +13,16 @@ public class Board : MonoBehaviour {
     {
         Vector3 coordinates = piece.transform.position;
         int[] newPosition = this._pieceMapping.GetNearestPosition(coordinates);
-        this.PlacePiece(piece, newPosition);
+        this.MovePiece(piece, newPosition);
         return newPosition;
     }
 
-    public Vector2 GetCoordinate(int[] position)
+    public Vector3 GetCoordinate(int[] position)
     {
         return this._pieceMapping.GetCoordinate(position);
     }
 
-    private void PlacePiece( Piece piece, int[] newPosition )
+    private void MovePiece( Piece piece, int[] newPosition )
     {
         // TODO delete pieces from current position and add to new position
     }

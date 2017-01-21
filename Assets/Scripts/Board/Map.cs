@@ -16,7 +16,7 @@ public class Map
         this.CalculateCoordinates(min, size, yRotation);
     }
 
-    public Vector2 GetCoordinate(int[] position)
+    public Vector3 GetCoordinate(int[] position)
     {
         return this._coordinates[position[0], position[1]];
     }
