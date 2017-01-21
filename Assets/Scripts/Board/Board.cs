@@ -19,17 +19,6 @@ public class Board : MonoBehaviour {
         return newPosition;
     }
 
-    public void ApplyPositionsToPieces()
-    {
-        foreach(Piece piece in _pieces)
-        {
-            if (piece != null)
-            {
-                piece.transform.position = this.GetCoordinate(piece.position);
-            }
-        }
-    }
-
     public Vector3 GetCoordinate(int[] position)
     {
         return this._pieceMapping.GetCoordinate(position);
