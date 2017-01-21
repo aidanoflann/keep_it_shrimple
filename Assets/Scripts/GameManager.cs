@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        this._waveManager.Tick(this._board);
     }
 
     public void TurnChange()
@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour
             Camera.main.backgroundColor = Color.black;
         }
         // wavemanager will check if the board needs to be waved, and if so, waves it.
-        if (this.wavesEnabled)
+        if (this.wavesEnabled && this._waveManager.IsAWaveDue)
         {
-            this._waveManager.ApplyWaveToBoard(this._board);
+            this._waveManager.TriggerWave();
         }
     }
 }

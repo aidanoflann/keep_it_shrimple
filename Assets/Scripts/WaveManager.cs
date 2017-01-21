@@ -9,22 +9,58 @@ public class WaveManager {
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
+    private Animator _waveAnimator;
+    private AnimatorStateInfo _waveAnimatorStateInfo;
+    private bool waveHasHappened;
 
     public WaveManager()
     {
         this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
+        this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
+        this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
+        this.waveHasHappened = false;
+    }
+
+    public void Tick(Board board)
+    {
+        this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (this._waveAnimatorStateInfo.IsName("Wave1") &&
+            this._waveAnimatorStateInfo.normalizedTime >= 1f &&
+            !this.waveHasHappened)
+        {
+            waveHasHappened = true;
+            this.ApplyWaveToBoard(board);
+            _waveAnimator.SetTrigger("EndWave");
+        
+        }
+        else if (this._waveAnimatorStateInfo.IsName("Idle"))
+        {
+            waveHasHappened = false;
+        }
+    }
+
+    public void TriggerWave()
+    {
+        _waveAnimator.SetTrigger("StartWave");
+    }
+
+    public bool IsAWaveDue
+    {
+        get
+        {
+            // note this property has a side effect lol jams
+            this._turnCounter++;
+            return this._turnCounter >= this._turnOfNextWave;
+        }
     }
 
 	public void ApplyWaveToBoard(Board board)
     {
-        this._turnCounter++;
-        if (this._turnCounter >= this._turnOfNextWave)
-        {
-            this.currentBehaviour.DoWave(board);
-            this._turnCounter = -1;
-            this.CalculateTurnOfNextWaveAndBehaviour();
-        }
+        this.currentBehaviour.DoWave(board);
+        this._turnCounter = -1;
+        this.CalculateTurnOfNextWaveAndBehaviour();
     }
 
     private void CalculateTurnOfNextWaveAndBehaviour()
