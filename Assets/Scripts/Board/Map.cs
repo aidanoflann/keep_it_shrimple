@@ -24,10 +24,12 @@ public class Map
         {
             for (int z = 0; z < this._numZSquares; z++)
             {
-                if (Vector3.Distance(point, this._coordinates[x, z]) < closestDistance)
+                float currentDistance = Vector3.Distance(point, this._coordinates[x, z]);
+                if ( currentDistance < closestDistance)
                 {
                     position[0] = x;
                     position[1] = z;
+                    closestDistance = currentDistance; 
                 }
             }
         }
