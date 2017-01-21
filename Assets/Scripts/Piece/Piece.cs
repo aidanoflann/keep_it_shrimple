@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Piece : MonoBehaviour {
 
@@ -10,11 +11,39 @@ public class Piece : MonoBehaviour {
     private float distance;
     private float y;
     private GameManager _gameManager; // super bad practice lol
+    private PieceBehaviour myBehaviour;
+    List<int[]> currentLegalPositions;
     #endregion
 
     public PieceColour colour;
 
-    public void Place(Vector3 position, bool triggerTurnChange=true)
+    public void Place(Vector3 position, bool triggerTurnChange = true)
+    // place the piece - snapping to nearest board position.
+    {
+        bool validMove = false;
+        int[] candidatePosition = _board.GetNearestPosition(this);
+        foreach (int[] test in currentLegalPositions) {
+            if (candidatePosition[0] == test[0] && candidatePosition[1] == test[1]) {
+                validMove = true;
+                break;
+            }
+        }
+        if (validMove)
+        {
+            this.transform.position = _board.GetCoordinate(candidatePosition);
+            this.position = candidatePosition;
+            if (triggerTurnChange)
+            {
+                this._gameManager.TurnChange();
+            }
+        }
+        else
+        {
+            this.transform.position = _board.GetCoordinate(this.position);
+        }
+    }
+
+    public void StartPlace(Vector3 position, bool triggerTurnChange = true)
     // place the piece - snapping to nearest board position.
     {
         this.position = _board.GetNearestPosition(this);
@@ -31,7 +60,8 @@ public class Piece : MonoBehaviour {
         this._board = FindObjectOfType<Board>();
         this._gameManager = FindObjectOfType<GameManager>();
         this.y = transform.position.y;
-        this.Place(this.transform.position, false);
+        this.myBehaviour = new RookBehaviour();
+        this.StartPlace(this.transform.position, false);
         Renderer rend = GetComponent<Renderer>();
         rend.material.shader = Shader.Find("Specular");
         Color shaderColor;
@@ -51,8 +81,12 @@ public class Piece : MonoBehaviour {
     {
         if (this.colour == this._gameManager.turn)
         {
-            distance = Vector3.Distance(transform.position, Camera.main.transform.position);
-            dragging = true;
+            currentLegalPositions = myBehaviour.legalPositions(_board, this);
+            if (currentLegalPositions.Count != 0)
+            {
+                distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+                dragging = true;
+            }
         }
     }
 
@@ -61,7 +95,7 @@ public class Piece : MonoBehaviour {
         if (dragging == true)
         {
             dragging = false;
-            this.Place(transform.position);
+            this.Place(transform.position); //position it will be placed at
         }
     }
 
@@ -77,5 +111,10 @@ public class Piece : MonoBehaviour {
             transform.position = rayPoint;
         }
     }
+
+    public int[] startPosition() {
+        return position;
+    }
+
     #endregion
 }
