@@ -16,7 +16,7 @@ public class KnightBehaviour : PieceBehaviour
             for (int z = -2; z <= 2; z = z + 4)
             {
                 int[] candidate = { start[0] + x, start[1] + z };
-                if (!isValidSpace(myBoard, candidate[0], candidate[1]))
+                if (!isInBounds(myBoard, candidate[0], candidate[1]))
                     continue;
                 Piece piecesSpace = myBoard._pieces[start[0] + x, start[1] + z];
                 if (piecesSpace == null)
@@ -37,7 +37,7 @@ public class KnightBehaviour : PieceBehaviour
             for (int z = -1; z <= 1; z = z + 2)
             {
                 int[] candidate = { start[0] + x, start[1] + z };
-                if (!isValidSpace(myBoard, candidate[0], candidate[1]))
+                if (!isInBounds(myBoard, candidate[0], candidate[1]))
                     continue;
                 Piece piecesSpace = myBoard._pieces[start[0] + x, start[1] + z];
                 if (piecesSpace == null)
@@ -56,7 +56,7 @@ public class KnightBehaviour : PieceBehaviour
         return positions;
     }
 
-    private bool isValidSpace(Board myBoard, int x_candidate, int z_candidate) {
+    private bool isInBounds(Board myBoard, int x_candidate, int z_candidate) {
         return (x_candidate >= 0 && x_candidate < myBoard._pieceMapping.numXSquares) && (z_candidate >= 0 && z_candidate < myBoard._pieceMapping.numZSquares);
     }
 }
