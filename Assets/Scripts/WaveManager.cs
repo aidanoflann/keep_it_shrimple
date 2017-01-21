@@ -10,22 +10,34 @@ public class WaveManager {
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
     private Animator _waveAnimator;
+    private AnimatorStateInfo _waveAnimatorStateInfo;
+    private bool waveHasHappened;
 
     public WaveManager()
     {
         this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
+        this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
+        this.waveHasHappened = false;
     }
 
     public void Tick(Board board)
     {
+        this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
 
-        if (!this._waveAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (this._waveAnimatorStateInfo.IsName("Wave1") &&
+            this._waveAnimatorStateInfo.normalizedTime >= 1f &&
+            !this.waveHasHappened)
         {
+            waveHasHappened = true;
             this.ApplyWaveToBoard(board);
-            _waveAnimator.SetTrigger("StartWave");
-
+            _waveAnimator.SetTrigger("EndWave");
+        
+        }
+        else if (this._waveAnimatorStateInfo.IsName("Idle"))
+        {
+            waveHasHappened = false;
         }
     }
 
