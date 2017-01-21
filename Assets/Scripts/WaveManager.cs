@@ -2,6 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum WaveDirection
+{
+    UP = 1,
+    DOWN = 2,
+    RIGHT = 3,
+    LEFT = 4
+}
+
 public class WaveManager {
 
     int _turnCounter = -1;
