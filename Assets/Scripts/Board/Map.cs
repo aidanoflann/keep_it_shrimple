@@ -18,7 +18,7 @@ public class Map
 
     public int[] GetNearestPosition(Vector3 point)
     {
-        float closestDistance = 10000f;
+        float closestDistance = float.MaxValue;
         int[] position = new int[2];
         for (int x = 0; x < this._numXSquares; x++)
         {
