@@ -18,16 +18,16 @@ public class WaveIndicator : MonoBehaviour {
         switch (direction)
         {
             case WaveDirection.UP:
-                _transform.eulerAngles = new Vector3(270, 180, 0);
-                break;
-            case WaveDirection.RIGHT:
-                _transform.eulerAngles = new Vector3(270, 270, 0);
-                break;
-            case WaveDirection.DOWN:
                 _transform.eulerAngles = new Vector3(270, 0, 0);
                 break;
-            case WaveDirection.LEFT:
+            case WaveDirection.RIGHT:
                 _transform.eulerAngles = new Vector3(270, 90, 0);
+                break;
+            case WaveDirection.DOWN:
+                _transform.eulerAngles = new Vector3(270, 180, 0);
+                break;
+            case WaveDirection.LEFT:
+                _transform.eulerAngles = new Vector3(270, 270, 0);
                 break;
         }
 
