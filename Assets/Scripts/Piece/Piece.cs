@@ -32,7 +32,20 @@ public class Piece : MonoBehaviour {
         this._gameManager = FindObjectOfType<GameManager>();
         this.y = transform.position.y;
         this.Place(this.transform.position, false);
-	}
+        Renderer rend = GetComponent<Renderer>();
+        rend.material.shader = Shader.Find("Specular");
+        Color shaderColor;
+        if (this.colour == PieceColour.BLACK)
+        {
+            shaderColor = Color.black;
+        }
+        else
+        {
+            shaderColor = Color.white;
+        }
+        shaderColor.a = 0.9f;
+        rend.material.SetColor("_Color", shaderColor);
+    }
 
     void OnMouseDown()
     {
