@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         this._waveManager = new WaveManager();
         this._board = FindObjectOfType<Board>();
         this._cameraAnimator = GameObject.Find("MainCamera").GetComponent<Animator>();
-        this.TurnChange();
+        this.TurnChange(false);
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         this._waveManager.Tick(this._board);
     }
 
-    public void TurnChange()
+    public void TurnChange(bool triggeredByPlayer=true)
     {
         if (this.turn == PieceColour.BLACK)
         {
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         {
             this._waveManager.TriggerWave();
         }
-        if (cameraRotateEnabled)
+        if (cameraRotateEnabled && triggeredByPlayer)
         {
             _cameraAnimator.SetTrigger("RotateCamera");
         }
