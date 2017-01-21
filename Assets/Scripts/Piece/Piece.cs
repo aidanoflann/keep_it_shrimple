@@ -36,14 +36,20 @@ public class Piece : MonoBehaviour {
 
     void OnMouseDown()
     {
-        distance = Vector3.Distance(transform.position, Camera.main.transform.position);
-        dragging = true;
+        if (this.colour == this._gameManager.turn)
+        {
+            distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+            dragging = true;
+        }
     }
 
     void OnMouseUp()
     {
-        dragging = false;
-        this.Place(transform.position);
+        if (dragging == true)
+        {
+            dragging = false;
+            this.Place(transform.position);
+        }
     }
 
 
