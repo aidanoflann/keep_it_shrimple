@@ -16,7 +16,7 @@ public class Map
         this.CalculateCoordinates(min, size, yRotation);
     }
 
-    public int[] GetNearestPosition(Vector3 point)
+    public Vector3 GetNearestPosition(Vector3 point)
     {
         float closestDistance = float.MaxValue;
         int[] position = new int[2];
@@ -31,7 +31,7 @@ public class Map
                 }
             }
         }
-        return position;
+        return this._coordinates[position[0], position[1]];
     }
 
     public void CalculateCoordinates(Vector3 min, Vector3 size, float yRotation)
