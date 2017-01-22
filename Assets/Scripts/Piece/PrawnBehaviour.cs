@@ -24,45 +24,58 @@ public class PrawnBehaviour : PieceBehaviour
         //check square immediately infront
         candidate[0] = start[0];
         candidate[1] = start[1]+(modifier);
-        Piece pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
-        //if it is between 0<=candidate[i]<8 AND the space is unoccupied it is a valid position
-        if ((candidate[1] < myBoard._pieceMapping.numZSquares && candidate[1] >= 0) && pieceSpace == null) {
-            positions.Add(new int[] { candidate[0], candidate[1]});
-            frontSquareOccupied = false;
-        }
-        //check if you can go two spaces ahead
-        if (currentPiece.isFirstMove && !frontSquareOccupied) {
-            candidate[0] = start[0];
-            candidate[1] = start[1] + (modifier*2);
-            pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
-            if ((candidate[1] < myBoard._pieceMapping.numZSquares && candidate[1] >= 0) && pieceSpace == null)      //redundant lel
+        //if candidate is not in bounds, move on. . .
+        if (isInBounds(myBoard, candidate[0], candidate[1]))
+        {
+            Piece pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
+            //if it is between 0<=candidate[i]<8 AND the space is unoccupied it is a valid position
+            if (pieceSpace == null)
             {
                 positions.Add(new int[] { candidate[0], candidate[1] });
                 frontSquareOccupied = false;
             }
         }
+        //check if you can go two spaces ahead
+        candidate[0] = start[0];
+        candidate[1] = start[1] + (modifier * 2);
+        if (currentPiece.isFirstMove && !frontSquareOccupied && isInBounds(myBoard, candidate[0], candidate[1])) {
+            Piece pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
+            if (pieceSpace == null)
+            {
+                positions.Add(new int[] { candidate[0], candidate[1] });
+            }
+        }
         //check if there are any pieces you can capture
         candidate[0] = start[0] + 1;
         candidate[1] = start[1] + modifier;
-        pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
-        //if it is between 0<=candidate[i]<8 AND the space is unoccupied it is a valid position
-        if ((pieceSpace != null) && ((candidate[0] < myBoard._pieceMapping.numXSquares && candidate[1] >= 0) && 
-            (candidate[1] < myBoard._pieceMapping.numZSquares && candidate[1] >= 0)))
+        if (isInBounds(myBoard, candidate[0], candidate[1]))
         {
-            positions.Add(new int[] { candidate[0], candidate[1] });
-            candidateDeadPeople.Add(pieceSpace);
+            Piece pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
+            //if it is between 0<=candidate[i]<8 AND the space is unoccupied it is a valid position
+            if (pieceSpace != null)
+            {
+                positions.Add(new int[] { candidate[0], candidate[1] });
+                candidateDeadPeople.Add(pieceSpace);
+            }
         }
         candidate[0] = start[0] - 1;
         candidate[1] = start[1] + modifier;
-        pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
-        //if it is between 0<=candidate[i]<8 AND the space is unoccupied it is a valid position
-        if ((pieceSpace != null) && ( ( candidate[0] < myBoard._pieceMapping.numXSquares && candidate[1] >= 0 ) && 
-            (candidate[1] < myBoard._pieceMapping.numZSquares && candidate[1] >= 0)))
+        if (isInBounds(myBoard, candidate[0], candidate[1]))
         {
-            positions.Add(new int[] { candidate[0], candidate[1] });
-            candidateDeadPeople.Add(pieceSpace);
+            Piece pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
+            //if it is between 0<=candidate[i]<8 AND the space is unoccupied it is a valid position
+            if (pieceSpace != null)
+            {
+                positions.Add(new int[] { candidate[0], candidate[1] });
+                candidateDeadPeople.Add(pieceSpace);
+            }
         }
-        
         return positions;
     }
+
+    private bool isInBounds(Board myBoard, int x_candidate, int z_candidate)
+    {
+        return (x_candidate >= 0 && x_candidate < myBoard._pieceMapping.numXSquares) && (z_candidate >= 0 && z_candidate < myBoard._pieceMapping.numZSquares);
+    }
+
 }
