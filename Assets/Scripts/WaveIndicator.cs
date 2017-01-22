@@ -5,12 +5,15 @@ public class WaveIndicator : MonoBehaviour {
 
     Renderer _renderer;
     Transform _transform;
+    Renderer waveIncomingTextRenderer;
 
 	// Use this for initialization
 	void Start () {
         _renderer = GetComponent<Renderer>();
         _transform = gameObject.transform;
+        this.waveIncomingTextRenderer = GameObject.Find("wave_incoming_text").GetComponent<Renderer>();
         _renderer.enabled = false;
+        this.waveIncomingTextRenderer.enabled = false;
 	}
 	
 	public void Indicate(WaveDirection direction)
@@ -32,10 +35,12 @@ public class WaveIndicator : MonoBehaviour {
         }
 
         _renderer.enabled = true;
+        waveIncomingTextRenderer.enabled = true;
     }
 
     public void Hide()
     {
         _renderer.enabled = false;
+        this.waveIncomingTextRenderer.enabled = false;
     }
 }
