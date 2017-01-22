@@ -32,7 +32,7 @@ public class WaveManager {
         this.allBehaviours.Add(new DownWave());
         this.allBehaviours.Add(new LeftWave());
         this.allBehaviours.Add(new RightWave());
-        this.safeBehaviours.Add(new UpWave());
+        this.safeBehaviours.Add(new LeftWave());
         this.safeBehaviours.Add(new RightWave());
 
         this.CalculateTurnOfNextWaveAndBehaviour();
