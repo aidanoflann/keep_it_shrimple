@@ -71,12 +71,12 @@ public class GameManager : MonoBehaviour
         if (this.turn == PieceColour.BLACK)
         {
             this.turn = PieceColour.WHITE;
-            Camera.main.backgroundColor = Color.white;
+            Camera.main.backgroundColor = new Color(212f/255f, 0.9f, 0.9f);
         }
         else if (this.turn == PieceColour.WHITE)
         {
             this.turn = PieceColour.BLACK;
-            Camera.main.backgroundColor = Color.black;
+            Camera.main.backgroundColor = new Color(106f/255f, 130f/255f, 148f/255f);
         }
         // wavemanager will check if the board needs to be waved, and if so, waves it.
         if (this.wavesEnabled && this._waveManager.IsAWaveDue)
