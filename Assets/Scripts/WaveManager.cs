@@ -58,7 +58,25 @@ public class WaveManager {
 
     public void TriggerWave()
     {
-        _waveAnimator.SetTrigger("StartWave");
+        switch (this._waveDirection)
+        {
+            case (WaveDirection.LEFT):
+                _waveAnimator.SetTrigger("StartWaveLeft");
+                break;
+
+            case (WaveDirection.UP):
+                _waveAnimator.SetTrigger("StartWaveUp");
+                break;
+
+            case (WaveDirection.DOWN):
+                _waveAnimator.SetTrigger("StartWaveDown");
+                break;
+
+            case (WaveDirection.RIGHT):
+                _waveAnimator.SetTrigger("StartWaveRight");
+                break;
+        }
+        
     }
 
     public bool IsAWaveDue
