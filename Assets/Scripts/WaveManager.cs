@@ -15,11 +15,13 @@ public class WaveManager {
 
     int _turnCounter = -1;
     int _turnOfNextWave;
+    int _turnsSinceStart = -1;
     private WaveIndicator _waveIndicator;
     private WaveDirection _waveDirection;
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
+    private List<IWaveBehaviour> safeBehaviours = new List<IWaveBehaviour>();
     private Animator _waveAnimator;
     private AnimatorStateInfo _waveAnimatorStateInfo;
     private bool waveHasHappened;
@@ -30,6 +32,9 @@ public class WaveManager {
         this.allBehaviours.Add(new DownWave());
         this.allBehaviours.Add(new LeftWave());
         this.allBehaviours.Add(new RightWave());
+        this.safeBehaviours.Add(new LeftWave());
+        this.safeBehaviours.Add(new RightWave());
+
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
@@ -88,7 +93,8 @@ public class WaveManager {
         {
             // note this property has a side effect lol jams
             this._turnCounter++;
-            if (this._turnCounter + 1 == this._turnOfNextWave)
+            this._turnsSinceStart++;
+            if (this._turnCounter + 2 >= this._turnOfNextWave)
             {
                 this._waveIndicator.Indicate(this._waveDirection);
             }
@@ -107,7 +113,14 @@ public class WaveManager {
     private void CalculateTurnOfNextWaveAndBehaviour()
     {
         this._turnOfNextWave = Random.Range(3, 4);
-        this.currentBehaviour = this.allBehaviours[Random.Range(0, this.allBehaviours.Count)];
+        if (this._turnsSinceStart <= 14)
+        {
+            this.currentBehaviour = this.safeBehaviours[Random.Range(0, this.safeBehaviours.Count)];
+        }
+        else
+        {
+            this.currentBehaviour = this.allBehaviours[Random.Range(0, this.allBehaviours.Count)];
+        }
         this._waveDirection = this.currentBehaviour.GetDirection();
     }
 }
