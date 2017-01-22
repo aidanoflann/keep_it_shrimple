@@ -85,11 +85,11 @@ public class Piece : MonoBehaviour
         Object.Destroy(this.gameObject);
     }
 
-    public void StartPlace(Vector3 position, bool triggerTurnChange = true)
+    public void StartPlace(Vector3 position, bool triggerTurnChange = true, bool deletePositions = false)
     // place the piece - snapping to nearest board position.
     {
         this.transform.position = position;
-        this.position = _board.GetNearestPosition(this);
+        this.position = _board.GetNearestPosition(this, deletePositions);
         this.transform.position = _board.GetCoordinate(this.position);
         if (triggerTurnChange)
         {
@@ -153,6 +153,9 @@ public class Piece : MonoBehaviour
             if (currentLegalPositions.Count != 0)
             {
                 distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+                Vector3 temp = this.transform.position;
+                temp.y = temp.y + 10;
+                this.transform.position = temp;
                 dragging = true;
             }
         }
