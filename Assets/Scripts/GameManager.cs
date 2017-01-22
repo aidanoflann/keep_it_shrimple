@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         this.turn = PieceColour.BLACK;
         this._waveManager = new WaveManager();
         this._board = FindObjectOfType<Board>();
