@@ -12,7 +12,8 @@ public class menuScript : MonoBehaviour
 
 	void Start ()
 	{
-		quitMenu = quitMenu.GetComponent<Canvas> ();
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        quitMenu = quitMenu.GetComponent<Canvas> ();
 		playButton = playButton.GetComponent<Button> ();
 		quitButton = quitButton.GetComponent<Button> ();
 		quitMenu.enabled = false;
