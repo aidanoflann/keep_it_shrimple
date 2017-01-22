@@ -32,7 +32,7 @@ public class WaveManager {
         this.allBehaviours.Add(new DownWave());
         this.allBehaviours.Add(new LeftWave());
         this.allBehaviours.Add(new RightWave());
-        this.safeBehaviours.Add(new LeftWave());
+        this.safeBehaviours.Add(new UpWave());
         this.safeBehaviours.Add(new RightWave());
 
         this.CalculateTurnOfNextWaveAndBehaviour();
@@ -146,18 +146,21 @@ class LeftWave : IWaveBehaviour
         {
             for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                Piece currentPiece = board._pieces[x, z];
-                if (currentPiece != null)
+                if (z % 2 == 1)
                 {
-                    if (x == board._pieceMapping.numXSquares - 1)
+                    Piece currentPiece = board._pieces[x, z];
+                    if (currentPiece != null)
                     {
-                        currentPiece.Destroy();
-                    }
-                    else
-                    {
-                        int[] position = new int[2] { x + 1, z };
-                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false, true);
+                        if (x == board._pieceMapping.numXSquares - 1)
+                        {
+                            currentPiece.Destroy();
+                        }
+                        else
+                        {
+                            int[] position = new int[2] { x + 1, z };
+                            Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                            currentPiece.StartPlace(newPosition, false, true);
+                        }
                     }
                 }
             }
@@ -180,18 +183,21 @@ class RightWave : IWaveBehaviour
         {
             for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                Piece currentPiece = board._pieces[x, z];
-                if (currentPiece != null)
+                if (z % 2 == 1)
                 {
-                    if (x == 0)
+                    Piece currentPiece = board._pieces[x, z];
+                    if (currentPiece != null)
                     {
-                        currentPiece.Destroy();
-                    }
-                    else
-                    {
-                        int[] position = new int[2] { x - 1, z };
-                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false, true);
+                        if (x == 0)
+                        {
+                            currentPiece.Destroy();
+                        }
+                        else
+                        {
+                            int[] position = new int[2] { x - 1, z };
+                            Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                            currentPiece.StartPlace(newPosition, false, true);
+                        }
                     }
                 }
             }
@@ -215,18 +221,21 @@ class UpWave : IWaveBehaviour
         {
             for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                Piece currentPiece = board._pieces[x, z];
-                if (currentPiece != null)
+                if (x % 2 == 1)
                 {
-                    if (z == 0)
+                    Piece currentPiece = board._pieces[x, z];
+                    if (currentPiece != null)
                     {
-                        currentPiece.Destroy();
-                    }
-                    else
-                    {
-                        int[] position = new int[2] { x , z - 1 };
-                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false, true);
+                        if (z == 0)
+                        {
+                            currentPiece.Destroy();
+                        }
+                        else
+                        {
+                            int[] position = new int[2] { x, z - 1 };
+                            Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                            currentPiece.StartPlace(newPosition, false, true);
+                        }
                     }
                 }
             }
@@ -249,18 +258,21 @@ class DownWave : IWaveBehaviour
         {
             for (int z = board._pieceMapping.numZSquares - 1; z > -1; z--)
             {
-                Piece currentPiece = board._pieces[x, z];
-                if (currentPiece != null)
+                if (x % 2 == 1)
                 {
-                    if (z == board._pieceMapping.numZSquares - 1)
+                    Piece currentPiece = board._pieces[x, z];
+                    if (currentPiece != null)
                     {
-                        currentPiece.Destroy();
-                    }
-                    else
-                    {
-                        int[] position = new int[2] { x, z + 1 };
-                        Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false, true);
+                        if (z == board._pieceMapping.numZSquares - 1)
+                        {
+                            currentPiece.Destroy();
+                        }
+                        else
+                        {
+                            int[] position = new int[2] { x, z + 1 };
+                            Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
+                            currentPiece.StartPlace(newPosition, false, true);
+                        }
                     }
                 }
             }
