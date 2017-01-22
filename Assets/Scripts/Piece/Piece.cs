@@ -36,7 +36,7 @@ public class Piece : MonoBehaviour
     {
         this.transform.position = position;
         bool validMove = false;
-        int[] candidatePosition = _board.GetNearestPosition(this);
+        int[] candidatePosition = _board.GetNearestPosition(this, false);
         foreach (int[] test in currentLegalPositions)
         {
             if (candidatePosition[0] == test[0] && candidatePosition[1] == test[1])
@@ -76,7 +76,7 @@ public class Piece : MonoBehaviour
     // place the piece - snapping to nearest board position.
     {
         this.transform.position = position;
-        this.position = _board.GetNearestPosition(this);
+        this.position = _board.GetNearestPosition(this, true);
         this.transform.position = _board.GetCoordinate(this.position);
         if (triggerTurnChange)
         {
