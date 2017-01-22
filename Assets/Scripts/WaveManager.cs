@@ -26,10 +26,10 @@ public class WaveManager {
 
     public WaveManager()
     {
-        //this.allBehaviours.Add(new UpWave());
+        this.allBehaviours.Add(new UpWave());
         this.allBehaviours.Add(new DownWave());
-        //this.allBehaviours.Add(new LeftWave());
-        //this.allBehaviours.Add(new RightWave());
+        this.allBehaviours.Add(new LeftWave());
+        this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
