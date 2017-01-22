@@ -18,6 +18,7 @@ public class WaveManager {
     int _turnsSinceStart = -1;
     private WaveIndicator _waveIndicator;
     private WaveDirection _waveDirection;
+    private List<int> _dangerRows = new List<int>() { 1, 3, 4, 6 };
 
     private IWaveBehaviour currentBehaviour;
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
@@ -110,7 +111,7 @@ public class WaveManager {
 
 	public void ApplyWaveToBoard(Board board)
     {
-        this.currentBehaviour.DoWave(board);
+        this.currentBehaviour.DoWave(board, this._dangerRows);
         this._waveIndicator.Hide();
         this._turnCounter = -1;
         this.CalculateTurnOfNextWaveAndBehaviour();
@@ -133,7 +134,7 @@ public class WaveManager {
 
 public interface IWaveBehaviour
 {
-    void DoWave(Board board);
+    void DoWave(Board board, List<int> dangerRows);
     WaveDirection GetDirection();
 }
 
@@ -144,7 +145,7 @@ class LeftWave : IWaveBehaviour
         return WaveDirection.LEFT;
     }
 
-    public void DoWave(Board board)
+    public void DoWave(Board board, List<int> dangerRows)
     {
         // iterate through all positions on the board, and set its value to the value to the left
         // note: iterating right to left
@@ -152,7 +153,7 @@ class LeftWave : IWaveBehaviour
         {
             for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                if (z % 2 == 1)
+                if (dangerRows.Contains(z))
                 {
                     Piece currentPiece = board._pieces[x, z];
                     if (currentPiece != null)
@@ -181,7 +182,7 @@ class RightWave : IWaveBehaviour
         return WaveDirection.RIGHT;
     }
 
-    public void DoWave(Board board)
+    public void DoWave(Board board, List<int> dangerRows)
     {
         // iterate through all positions on the board, and set its value to the value to the left
         // note: iterating left to right
@@ -189,7 +190,7 @@ class RightWave : IWaveBehaviour
         {
             for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                if (z % 2 == 1)
+                if (dangerRows.Contains(z))
                 {
                     Piece currentPiece = board._pieces[x, z];
                     if (currentPiece != null)
@@ -219,7 +220,7 @@ class UpWave : IWaveBehaviour
         return WaveDirection.UP;
     }
 
-    public void DoWave(Board board)
+    public void DoWave(Board board, List<int> dangerRows)
     {
         // iterate through all positions on the board, and set its value to the value to the left
         // note: iterating top to bottom
@@ -256,7 +257,7 @@ class DownWave : IWaveBehaviour
         return WaveDirection.DOWN;
     }
 
-    public void DoWave(Board board)
+    public void DoWave(Board board, List<int> dangerRows)
     {
         // iterate through all positions on the board, and set its value to the value to the left
         // note: iterating top to bottom
