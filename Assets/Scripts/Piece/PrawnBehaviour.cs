@@ -18,7 +18,7 @@ public class PrawnBehaviour : PieceBehaviour
         //White pieces will have a +ve z direction only
         //Black pieces will have a -ze z direction only
         int modifier = 1;
-        if (currentPiece.colour == PieceColour.BLACK)
+        if (currentPiece.colour == PieceColour.WHITE)
             modifier = -1;
 
         //check square immediately infront
@@ -34,7 +34,7 @@ public class PrawnBehaviour : PieceBehaviour
         if (currentPiece.isFirstMove && !frontSquareOccupied) {
             candidate[0] = start[0];
             candidate[1] = start[1] + (modifier*2);
-             pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
+            pieceSpace = myBoard._pieces[candidate[0], candidate[1]];
             if ((candidate[1] < myBoard._pieceMapping.numZSquares && candidate[1] >= 0) && pieceSpace == null)      //redundant lel
             {
                 positions.Add(new int[] { candidate[0], candidate[1] });
