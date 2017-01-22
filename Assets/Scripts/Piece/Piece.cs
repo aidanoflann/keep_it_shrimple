@@ -55,7 +55,7 @@ public class Piece : MonoBehaviour
                 Piece candidate = deathList[i];
                 if (candidate.position[0] == this.position[0] && candidate.position[1] == this.position[1])
                 {
-                    Object.Destroy(candidate.gameObject);
+                    candidate.Destroy();
                     candidate = null;
                 }
             }
@@ -70,6 +70,19 @@ public class Piece : MonoBehaviour
         {
             this.transform.position = _board.GetCoordinate(this.position);
         }
+    }
+
+    public void Destroy()
+    {
+        if (this.myType == PieceType.KING)
+        {
+            if (this.colour == PieceColour.BLACK)
+                _gameManager.theWinner = PieceColour.WHITE;
+            else if (this.colour == PieceColour.WHITE)
+                _gameManager.theWinner = PieceColour.BLACK;
+        }
+
+        Object.Destroy(this.gameObject);
     }
 
     public void StartPlace(Vector3 position, bool triggerTurnChange = true)

@@ -39,20 +39,23 @@ public class WaveManager {
 
     public void Tick(Board board)
     {
-        this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
+        if (this._waveAnimator != null)
+        {
+            this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
 
-        if (this._waveAnimatorStateInfo.IsTag("Waving") &&
-            this._waveAnimatorStateInfo.normalizedTime >= 1f &&
-            !this.waveHasHappened)
-        {
-            waveHasHappened = true;
-            this.ApplyWaveToBoard(board);
-            _waveAnimator.SetTrigger("EndWave");
-        
-        }
-        else if (this._waveAnimatorStateInfo.IsName("Idle"))
-        {
-            waveHasHappened = false;
+            if (this._waveAnimatorStateInfo.IsTag("Waving") &&
+                this._waveAnimatorStateInfo.normalizedTime >= 1f &&
+                !this.waveHasHappened)
+            {
+                waveHasHappened = true;
+                this.ApplyWaveToBoard(board);
+                _waveAnimator.SetTrigger("EndWave");
+
+            }
+            else if (this._waveAnimatorStateInfo.IsName("Idle"))
+            {
+                waveHasHappened = false;
+            }
         }
     }
 
@@ -135,7 +138,7 @@ class LeftWave : IWaveBehaviour
                 {
                     if (x == board._pieceMapping.numXSquares - 1)
                     {
-                        Object.Destroy(currentPiece.gameObject);
+                        currentPiece.Destroy();
                     }
                     else
                     {
@@ -169,7 +172,7 @@ class RightWave : IWaveBehaviour
                 {
                     if (x == 0)
                     {
-                        Object.Destroy(currentPiece.gameObject);
+                        currentPiece.Destroy();
                     }
                     else
                     {
@@ -204,7 +207,7 @@ class UpWave : IWaveBehaviour
                 {
                     if (z == 0)
                     {
-                        Object.Destroy(currentPiece.gameObject);
+                        currentPiece.Destroy();
                     }
                     else
                     {
@@ -238,7 +241,7 @@ class DownWave : IWaveBehaviour
                 {
                     if (z == board._pieceMapping.numZSquares - 1)
                     {
-                        Object.Destroy(currentPiece.gameObject);
+                        currentPiece.Destroy();
                     }
                     else
                     {
