@@ -16,6 +16,7 @@ public class KnightBehaviour : PieceBehaviour
             for (int z = -2; z <= 2; z = z + 4)
             {
                 int[] candidate = { start[0] + x, start[1] + z };
+                //if oob then continue with for loop
                 if (!isInBounds(myBoard, candidate[0], candidate[1]))
                     continue;
                 Piece piecesSpace = myBoard._pieces[start[0] + x, start[1] + z];

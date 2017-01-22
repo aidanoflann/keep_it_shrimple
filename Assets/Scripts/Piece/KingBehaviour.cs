@@ -20,7 +20,7 @@ public class KingBehaviour : PieceBehaviour
             for (int z = -1; z < 2; z++)
             {
                 int z_candidate = start[1] + z;
-                //test if its a valid square
+                //bounds check first
                 if ((x == 0 && z == 0) || (z_candidate < 0 || z_candidate >= myBoard._pieceMapping.numZSquares))
                     continue;
                 //test for existing items in this space
