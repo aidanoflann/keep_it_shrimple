@@ -66,6 +66,13 @@ public class GameManager : MonoBehaviour
         this.isWinScreen = true;
     }
 
+    public bool IsAnimationPlaying()
+    {
+        return this._waveManager.IsAnimationPlaying();
+    }
+
+
+
     public void TurnChange(bool triggeredByPlayer=true)
     {
         if (this.turn == PieceColour.BLACK)

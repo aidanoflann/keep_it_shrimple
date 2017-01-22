@@ -64,6 +64,12 @@ public class WaveManager {
         }
     }
 
+    public bool IsAnimationPlaying()
+    {
+        this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
+        return this._waveAnimatorStateInfo.IsTag("Waving") || this._waveAnimatorStateInfo.IsTag("Waved");
+    }
+
     public void TriggerWave()
     {
         switch (this._waveDirection)

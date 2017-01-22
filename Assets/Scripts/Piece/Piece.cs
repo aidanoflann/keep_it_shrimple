@@ -149,13 +149,12 @@ public class Piece : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (this.colour == this._gameManager.turn)
+        if (this.colour == this._gameManager.turn && !this._gameManager.IsAnimationPlaying())
         {
             currentLegalPositions = myBehaviour.legalPositions(_board, this, out this.deathList);
             if (currentLegalPositions.Count != 0)
             {
                 distance = Vector3.Distance(transform.position, Camera.main.transform.position);
-                
                 dragging = true;
             }
         }
