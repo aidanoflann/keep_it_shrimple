@@ -218,7 +218,7 @@ class UpWave : IWaveBehaviour
                 Piece currentPiece = board._pieces[x, z];
                 if (currentPiece != null)
                 {
-                    if (z == 0)
+                    if (z == board._pieceMapping.numZSquares - 1)
                     {
                         Object.Destroy(currentPiece.gameObject);
                     }
