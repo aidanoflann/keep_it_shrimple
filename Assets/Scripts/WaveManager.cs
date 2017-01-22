@@ -221,7 +221,7 @@ class UpWave : IWaveBehaviour
         {
             for (int z = 0; z < board._pieceMapping.numZSquares; z++)
             {
-                if (x % 2 == 1)
+                if (x % 2 == 0)
                 {
                     Piece currentPiece = board._pieces[x, z];
                     if (currentPiece != null)
@@ -258,7 +258,7 @@ class DownWave : IWaveBehaviour
         {
             for (int z = board._pieceMapping.numZSquares - 1; z > -1; z--)
             {
-                if (x % 2 == 1)
+                if (x % 2 == 0)
                 {
                     Piece currentPiece = board._pieces[x, z];
                     if (currentPiece != null)
