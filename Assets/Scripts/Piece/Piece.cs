@@ -30,6 +30,7 @@ public class Piece : MonoBehaviour
     public PieceColour colour;
     private List<Piece> deathList;
     public bool isFirstMove = true;
+    public AudioSource deadSploosh;
 
     public void Place(Vector3 position, bool triggerTurnChange = true)
     // place the piece - snapping to nearest board position.
@@ -81,7 +82,8 @@ public class Piece : MonoBehaviour
             else if (this.colour == PieceColour.WHITE)
                 _gameManager.theWinner = PieceColour.BLACK;
         }
-
+        if(!deadSploosh.isPlaying)
+            deadSploosh.Play();
         Object.Destroy(this.gameObject);
     }
 
