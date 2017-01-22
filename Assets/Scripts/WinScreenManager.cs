@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class WinScreenManager : MonoBehaviour {
 
-    void OnMouseDown()
-    {
-        SceneManager.LoadScene("MainMenu");
+    void Update() {
+        if (Input.GetMouseButtonUp(0))
+            SceneManager.LoadScene("MainMenu");
     }
 }
