@@ -88,7 +88,7 @@ public class WaveManager {
         {
             // note this property has a side effect lol jams
             this._turnCounter++;
-            if (this._turnCounter + 1 == this._turnOfNextWave)
+            if (this._turnCounter + 2 >= this._turnOfNextWave)
             {
                 this._waveIndicator.Indicate(this._waveDirection);
             }
