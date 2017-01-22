@@ -27,9 +27,9 @@ public class WaveManager {
     public WaveManager()
     {
         //this.allBehaviours.Add(new UpWave());
-        //this.allBehaviours.Add(new DownWave());
+        this.allBehaviours.Add(new DownWave());
         //this.allBehaviours.Add(new LeftWave());
-        this.allBehaviours.Add(new RightWave());
+        //this.allBehaviours.Add(new RightWave());
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
@@ -184,11 +184,11 @@ class RightWave : IWaveBehaviour
 }
 
 
-class DownWave : IWaveBehaviour
+class UpWave : IWaveBehaviour
 {
     public WaveDirection GetDirection()
     {
-        return WaveDirection.DOWN;
+        return WaveDirection.UP;
     }
 
     public void DoWave(Board board)
@@ -218,11 +218,11 @@ class DownWave : IWaveBehaviour
     }
 }
 
-class UpWave : IWaveBehaviour
+class DownWave : IWaveBehaviour
 {
     public WaveDirection GetDirection()
     {
-        return WaveDirection.UP;
+        return WaveDirection.DOWN;
     }
 
     public void DoWave(Board board)
