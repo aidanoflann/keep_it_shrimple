@@ -36,7 +36,7 @@ public class Piece : MonoBehaviour
     {
         this.transform.position = position;
         bool validMove = false;
-        int[] candidatePosition = _board.GetNearestPosition(this, false);
+        int[] candidatePosition = _board.GetNearestPosition(this);
         foreach (int[] test in currentLegalPositions)
         {
             if (candidatePosition[0] == test[0] && candidatePosition[1] == test[1])
@@ -72,11 +72,11 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public void StartPlace(Vector3 position, bool triggerTurnChange = true)
+    public void StartPlace(Vector3 position, bool triggerTurnChange = true, bool deletePositions = false)
     // place the piece - snapping to nearest board position.
     {
         this.transform.position = position;
-        this.position = _board.GetNearestPosition(this, true);
+        this.position = _board.GetNearestPosition(this, deletePositions);
         this.transform.position = _board.GetCoordinate(this.position);
         if (triggerTurnChange)
         {
@@ -140,6 +140,9 @@ public class Piece : MonoBehaviour
             if (currentLegalPositions.Count != 0)
             {
                 distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+                Vector3 temp = this.transform.position;
+                temp.y = temp.y + 10;
+                this.transform.position = temp;
                 dragging = true;
             }
         }

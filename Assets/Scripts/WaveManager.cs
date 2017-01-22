@@ -141,7 +141,7 @@ class LeftWave : IWaveBehaviour
                     {
                         int[] position = new int[2] { x + 1, z };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false);
+                        currentPiece.StartPlace(newPosition, false, true);
                     }
                 }
             }
@@ -175,7 +175,7 @@ class RightWave : IWaveBehaviour
                     {
                         int[] position = new int[2] { x - 1, z };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false);
+                        currentPiece.StartPlace(newPosition, false, true);
                     }
                 }
             }
@@ -210,7 +210,7 @@ class UpWave : IWaveBehaviour
                     {
                         int[] position = new int[2] { x , z - 1 };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false);
+                        currentPiece.StartPlace(newPosition, false, true);
                     }
                 }
             }
@@ -244,7 +244,7 @@ class DownWave : IWaveBehaviour
                     {
                         int[] position = new int[2] { x, z + 1 };
                         Vector3 newPosition = board._pieceMapping.GetCoordinate(position);
-                        currentPiece.StartPlace(newPosition, false);
+                        currentPiece.StartPlace(newPosition, false, true);
                     }
                 }
             }
