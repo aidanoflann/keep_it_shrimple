@@ -11,5 +11,7 @@ public class WinScreenManager : MonoBehaviour {
     void Update() {
         if (Input.GetMouseButtonUp(0))
             SceneManager.LoadScene("MainMenu");
+        if (Input.GetMouseButtonDown(0))
+            SceneManager.LoadScene("MainMenu");
     }
 }
