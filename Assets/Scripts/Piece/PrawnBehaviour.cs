@@ -18,7 +18,7 @@ public class PrawnBehaviour : PieceBehaviour
         //White pieces will have a +ve z direction only
         //Black pieces will have a -ze z direction only
         int modifier = 1;
-        if (currentPiece.colour == PieceColour.WHITE)
+        if (currentPiece.colour == PieceColour.BLACK)
             modifier = -1;
 
         //check square immediately infront
