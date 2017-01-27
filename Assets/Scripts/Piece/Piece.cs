@@ -49,7 +49,7 @@ public class Piece : MonoBehaviour
         if (validMove)
         {
             this.transform.position = _board.GetCoordinate(candidatePosition);
-            Debug.LogFormat("Moving {0} from {1}, {2} to {3}, {4}", this.myType, this.position[0], this.position[1], candidatePosition[0], candidatePosition[1]);
+            Debug.LogFormat("Moving {0} {1} from {2}, {3} to {4}, {5}", this.colour, this.myType, this.position[0], this.position[1], candidatePosition[0], candidatePosition[1]);
             this.position = candidatePosition;
             //check if there is an existing piece and destroy it if there is
             for (int i = 0; i < deathList.Count; i++)
