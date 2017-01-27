@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         if (this.theWinner != PieceColour.NONE)
         {
             this.TriggerEndGame();
+            this.theWinner = PieceColour.NONE;
         }
     }
 
