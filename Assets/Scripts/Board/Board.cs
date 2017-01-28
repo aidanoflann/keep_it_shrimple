@@ -15,7 +15,6 @@ public class Board : MonoBehaviour {
     {
         Vector3 coordinates = piece.transform.position;
         int[] newPosition = this._pieceMapping.GetNearestPosition(coordinates);
-        this.MovePiece(piece, newPosition, deleteOldPositions);
         return newPosition;
     }
 
@@ -24,7 +23,7 @@ public class Board : MonoBehaviour {
         return this._pieceMapping.GetCoordinate(position);
     }
 
-    private void MovePiece( Piece piece, int[] newPosition, bool deleteOldPosition=true)
+    public void MovePiece( Piece piece, int[] newPosition, bool deleteOldPosition=true)
     {
         if (deleteOldPosition)
         {

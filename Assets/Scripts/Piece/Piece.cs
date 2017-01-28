@@ -48,6 +48,7 @@ public class Piece : MonoBehaviour
         }
         if (validMove)
         {
+            this._board.MovePiece(this, candidatePosition, true);
             this.transform.position = _board.GetCoordinate(candidatePosition);
             Debug.LogFormat("Moving {0} {1} from {2}, {3} to {4}, {5}", this.colour, this.myType, this.position[0], this.position[1], candidatePosition[0], candidatePosition[1]);
             this.position = candidatePosition;
@@ -92,7 +93,8 @@ public class Piece : MonoBehaviour
     // place the piece - snapping to nearest board position.
     {
         this.transform.position = position;
-        this.position = _board.GetNearestPosition(this, deletePositions);
+        this.position = _board.GetNearestPosition(this);
+        this._board.MovePiece(this, this.position);
         this.transform.position = _board.GetCoordinate(this.position);
         if (triggerTurnChange)
         {
