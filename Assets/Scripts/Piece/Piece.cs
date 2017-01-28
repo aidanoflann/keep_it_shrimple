@@ -93,8 +93,9 @@ public class Piece : MonoBehaviour
     // place the piece - snapping to nearest board position.
     {
         this.transform.position = position;
-        this.position = _board.GetNearestPosition(this);
-        this._board.MovePiece(this, this.position);
+        int[] newPosition = _board.GetNearestPosition(this);
+        this._board.MovePiece(this, newPosition, deletePositions);
+        this.position = newPosition;
         this.transform.position = _board.GetCoordinate(this.position);
         if (triggerTurnChange)
         {
