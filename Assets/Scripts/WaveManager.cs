@@ -117,11 +117,13 @@ public class WaveManager {
                 {
                     this._animatedWave.transform.eulerAngles = new Vector3(90, 180, 0);
                     this._animatedWaveAnimator.SetTrigger("IndicateRightWave");
+                    this._animatedWaveAnimator.SetBool("Indicating", true);
                 }
                 else if (this._waveDirection == WaveDirection.RIGHT)
                 {
                     this._animatedWave.transform.eulerAngles = new Vector3(90, 0, 0);
                     this._animatedWaveAnimator.SetTrigger("IndicateLeftWave");
+                    this._animatedWaveAnimator.SetBool("Indicating", true);
                 }
                 this._animatedWaveRenderer.enabled = true;
             }
@@ -134,9 +136,9 @@ public class WaveManager {
         this.currentBehaviour.DoWave(board, this._dangerRows);
         this._waveIndicator.Hide();
         this._animatedWaveRenderer.enabled = false;
-        this._animatedWaveAnimator.SetTrigger("StopIndicating");
         this._turnCounter = -1;
         this.CalculateTurnOfNextWaveAndBehaviour();
+        this._animatedWaveAnimator.SetBool("Indicating", false);
     }
 
     private void CalculateTurnOfNextWaveAndBehaviour()
