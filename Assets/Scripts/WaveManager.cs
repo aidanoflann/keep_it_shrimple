@@ -29,6 +29,10 @@ public class WaveManager {
     private SpriteRenderer _animatedWaveRenderer;
     private Animator _animatedWaveAnimator;
 
+    private GameObject _animatedVertWave;
+    private SpriteRenderer _animatedVertWaveRenderer;
+    private Animator _animatedVertWaveAnimator;
+
     private AnimatorStateInfo _waveAnimatorStateInfo;
     private bool waveHasHappened;
 
@@ -43,10 +47,17 @@ public class WaveManager {
 
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
+
         this._animatedWave = GameObject.Find("wave_horizontal");
         this._animatedWaveRenderer = this._animatedWave.GetComponent<SpriteRenderer>();
         this._animatedWaveRenderer.enabled = false;
         this._animatedWaveAnimator = this._animatedWave.GetComponent<Animator>();
+
+        this._animatedVertWave = GameObject.Find("wave_horizontal");
+        this._animatedVertWaveRenderer = this._animatedVertWave.GetComponent<SpriteRenderer>();
+        this._animatedVertWaveRenderer.enabled = false;
+        this._animatedVertWaveAnimator = this._animatedVertWave.GetComponent<Animator>();
+
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
         this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
         this.waveHasHappened = false;
@@ -125,6 +136,18 @@ public class WaveManager {
                     this._animatedWaveAnimator.SetTrigger("IndicateLeftWave");
                     this._animatedWaveAnimator.SetBool("Indicating", true);
                 }
+                else if (this._waveDirection == WaveDirection.UP)
+                {
+                    this._animatedVertWave.transform.localScale = new Vector3(1, -1, 1);
+                    this._animatedVertWaveAnimator.SetTrigger("IndicateUpWave");
+                    this._animatedVertWaveAnimator.SetBool("Indicating", true);
+                }
+                else if (this._waveDirection == WaveDirection.DOWN)
+                {
+                    this._animatedVertWave.transform.localScale = new Vector3(1, 1, 1);
+                    this._animatedVertWaveAnimator.SetTrigger("IndicateDownWave");
+                    this._animatedVertWaveAnimator.SetBool("Indicating", true);
+                }
                 this._animatedWaveRenderer.enabled = true;
             }
             return this._turnCounter >= this._turnOfNextWave;
@@ -139,6 +162,7 @@ public class WaveManager {
         this._turnCounter = -1;
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._animatedWaveAnimator.SetBool("Indicating", false);
+        this._animatedVertWaveAnimator.SetBool("Indicating", false);
     }
 
     private void CalculateTurnOfNextWaveAndBehaviour()
