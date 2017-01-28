@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public PieceColour theWinner =  PieceColour.NONE;
     private Canvas winScreenCanvas;
     private bool isWinScreen = false;
-
+    
     public bool wavesEnabled;
     public bool cameraRotateEnabled;
 

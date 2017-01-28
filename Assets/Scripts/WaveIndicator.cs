@@ -33,7 +33,6 @@ public class WaveIndicator : MonoBehaviour {
                 _transform.eulerAngles = new Vector3(270, 90, 0);
                 break;
         }
-
         _renderer.enabled = true;
         waveIncomingTextRenderer.enabled = true;
     }

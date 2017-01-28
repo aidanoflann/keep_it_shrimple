@@ -24,6 +24,11 @@ public class WaveManager {
     private List<IWaveBehaviour> allBehaviours = new List<IWaveBehaviour>();
     private List<IWaveBehaviour> safeBehaviours = new List<IWaveBehaviour>();
     private Animator _waveAnimator;
+
+    private GameObject _animatedWave;
+    private SpriteRenderer _animatedWaveRenderer;
+    private Animator _animatedWaveAnimator;
+
     private AnimatorStateInfo _waveAnimatorStateInfo;
     private bool waveHasHappened;
 
@@ -38,6 +43,10 @@ public class WaveManager {
 
         this.CalculateTurnOfNextWaveAndBehaviour();
         this._waveAnimator = GameObject.Find("wave").GetComponent<Animator>();
+        this._animatedWave = GameObject.Find("wave_horizontal");
+        this._animatedWaveRenderer = this._animatedWave.GetComponent<SpriteRenderer>();
+        this._animatedWaveRenderer.enabled = false;
+        this._animatedWaveAnimator = this._animatedWave.GetComponent<Animator>();
         this._waveIndicator = GameObject.FindObjectOfType<WaveIndicator>();
         this._waveAnimatorStateInfo = this._waveAnimator.GetCurrentAnimatorStateInfo(0);
         this.waveHasHappened = false;
@@ -104,6 +113,17 @@ public class WaveManager {
             if (this._turnCounter + 2 >= this._turnOfNextWave)
             {
                 this._waveIndicator.Indicate(this._waveDirection);
+                if (this._waveDirection == WaveDirection.LEFT)
+                {
+                    this._animatedWave.transform.eulerAngles = new Vector3(90, 0, 0);
+                    this._animatedWaveAnimator.SetTrigger("IndicateLeftWave");
+                }
+                if (this._waveDirection == WaveDirection.RIGHT)
+                {
+                    this._animatedWave.transform.eulerAngles = new Vector3(90, 180, 0);
+                    this._animatedWaveAnimator.SetTrigger("IndicateRightWave");
+                }
+                this._animatedWaveRenderer.enabled = true;
             }
             return this._turnCounter >= this._turnOfNextWave;
         }
@@ -113,6 +133,8 @@ public class WaveManager {
     {
         this.currentBehaviour.DoWave(board, this._dangerRows);
         this._waveIndicator.Hide();
+        this._animatedWaveRenderer.enabled = false;
+        this._animatedWaveAnimator.SetTrigger("StopIndicating");
         this._turnCounter = -1;
         this.CalculateTurnOfNextWaveAndBehaviour();
     }
