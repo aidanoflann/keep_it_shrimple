@@ -115,13 +115,13 @@ public class WaveManager {
                 this._waveIndicator.Indicate(this._waveDirection);
                 if (this._waveDirection == WaveDirection.LEFT)
                 {
-                    this._animatedWave.transform.eulerAngles = new Vector3(90, 0, 0);
-                    this._animatedWaveAnimator.SetTrigger("IndicateLeftWave");
-                }
-                if (this._waveDirection == WaveDirection.RIGHT)
-                {
                     this._animatedWave.transform.eulerAngles = new Vector3(90, 180, 0);
                     this._animatedWaveAnimator.SetTrigger("IndicateRightWave");
+                }
+                else if (this._waveDirection == WaveDirection.RIGHT)
+                {
+                    this._animatedWave.transform.eulerAngles = new Vector3(90, 0, 0);
+                    this._animatedWaveAnimator.SetTrigger("IndicateLeftWave");
                 }
                 this._animatedWaveRenderer.enabled = true;
             }
