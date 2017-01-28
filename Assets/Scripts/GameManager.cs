@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject.Find("BlackPlayerWins").GetComponent<Text>().enabled = false;
             }
+            this.theWinner = PieceColour.NONE;
         }
         this._waveManager.Tick(this._board);
         if (this.theWinner != PieceColour.NONE)
