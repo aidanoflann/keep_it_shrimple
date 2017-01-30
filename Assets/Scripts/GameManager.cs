@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private WaveManager _waveManager;
     private Board _board;
     private Animator _cameraAnimator;
+    private IndicatorManager _indicatorManager;
     public PieceColour theWinner =  PieceColour.NONE;
     private Canvas winScreenCanvas;
     private bool isWinScreen = false;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         this.turn = PieceColour.BLACK;
         this._waveManager = new WaveManager();
+        this._indicatorManager = new IndicatorManager();
         this._board = FindObjectOfType<Board>();
         this._cameraAnimator = GameObject.Find("MainCamera").GetComponent<Animator>();
         this.TurnChange(false);
