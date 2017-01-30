@@ -156,6 +156,7 @@ public class Piece : MonoBehaviour
         if (this.colour == this._gameManager.turn && !this._gameManager.IsAnimationPlaying())
         {
             currentLegalPositions = myBehaviour.legalPositions(_board, this, out this.deathList);
+            this._gameManager._indicatorManager.IndicateAllPositions(this._board, currentLegalPositions);
             if (currentLegalPositions.Count != 0)
             {
                 distance = Vector3.Distance(transform.position, Camera.main.transform.position);
@@ -171,6 +172,7 @@ public class Piece : MonoBehaviour
             dragging = false;
             this.Place(transform.position); //position it will be placed at
         }
+        this._gameManager._indicatorManager.Clear();
     }
 
 

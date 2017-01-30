@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private WaveManager _waveManager;
     private Board _board;
     private Animator _cameraAnimator;
-    private IndicatorManager _indicatorManager;
+    public IndicatorManager _indicatorManager;
     public PieceColour theWinner =  PieceColour.NONE;
     private Canvas winScreenCanvas;
     private bool isWinScreen = false;
@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
     {
         return this._waveManager.IsAnimationPlaying();
     }
-
 
 
     public void TurnChange(bool triggeredByPlayer=true)
