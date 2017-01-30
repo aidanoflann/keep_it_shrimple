@@ -24,7 +24,9 @@ public class IndicatorManager {
     public void Indicate(Vector3 coordinates)
     // generate a copy of the original highlighter and move it to the given coordinates
     {
-
+        GameObject clone = GameObject.Instantiate(this._original);
+        clone.transform.position = coordinates;
+        this._copies.Add(clone);
     }
 
     public void Clear()
