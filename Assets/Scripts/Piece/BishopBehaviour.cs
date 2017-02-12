@@ -22,14 +22,13 @@ public class BishopBehaviour : PieceBehaviour
             //set candidate and test if it's in bounds
             candidate[0] = start[0] + x;
             candidate[1] = start[1] + x;
-            //check if it's in bounds
-            ne = isInBounds(myBoard, candidate[0], candidate[1]);
-            //If in bounds see if everything else is fine
-            if (ne) {
+            //check if candidate was already flagged as invalid, if it is not then check it's in bounds
+            if (ne && isInBounds(myBoard, candidate[0], candidate[1]))
+            {
 
                 Piece piecesSpace = myBoard._pieces[candidate[0], candidate[1]];
                 if (piecesSpace == null)
-                    positions.Add(new int[] { candidate[0], candidate[1]});
+                    positions.Add(new int[] { candidate[0], candidate[1] });
                 else if (piecesSpace.colour != currentPiece.colour)
                 {
                     positions.Add(new int[] { candidate[0], candidate[1] });
@@ -39,14 +38,13 @@ public class BishopBehaviour : PieceBehaviour
                 else
                     ne = false;
             }
+            else
+                ne = false;
 
             //SE
             candidate[0] = start[0] + x;
             candidate[1] = start[1] - x;
-            //check if it's in bounds
-            se = isInBounds(myBoard, candidate[0], candidate[1]);
-            //If in bounds see if everything else is fine
-            if (se)
+            if (se && isInBounds(myBoard, candidate[0], candidate[1]))
             {
 
                 Piece piecesSpace = myBoard._pieces[candidate[0], candidate[1]];
@@ -61,14 +59,13 @@ public class BishopBehaviour : PieceBehaviour
                 else
                     se = false;
             }
+            else
+                se = false;
 
             //SW
             candidate[0] = start[0] - x;
             candidate[1] = start[1] - x;
-            //check if it's in bounds
-            sw = isInBounds(myBoard, candidate[0], candidate[1]);
-            //If in bounds see if everything else is fine
-            if (sw)
+            if (sw && isInBounds(myBoard, candidate[0], candidate[1]))
             {
 
                 Piece piecesSpace = myBoard._pieces[candidate[0], candidate[1]];
@@ -83,14 +80,13 @@ public class BishopBehaviour : PieceBehaviour
                 else
                     sw = false;
             }
+            else
+                sw = false;
 
             //NW
             candidate[0] = start[0] - x;
             candidate[1] = start[1] + x;
-            //check if it's in bounds
-            nw = isInBounds(myBoard, candidate[0], candidate[1]);
-            //If in bounds see if everything else is fine
-            if (nw)
+            if (nw && isInBounds(myBoard, candidate[0], candidate[1]))
             {
 
                 Piece piecesSpace = myBoard._pieces[candidate[0], candidate[1]];
@@ -105,6 +101,8 @@ public class BishopBehaviour : PieceBehaviour
                 else
                     nw = false;
             }
+            else
+                nw = false;
 
             //quit if everything is done now
             if (!ne && !nw && !sw && !se)
